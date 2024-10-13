@@ -25,14 +25,14 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir --root-user-action=ignore -r requirements.txt
 
 # Remove unnecessary build dependencies to reduce image size
-RUN apt-get remove -y gcc libpq-dev && apt-get autoremove -y
+RUN apt-get remove -y gcc libpq-dev && apt-get autoremove -y && apt-get clean
+
+# Copy the rest of the application code into the container
+COPY --chown=nonrootuser:nonrootuser . .
 
 # Add a non-root user and switch to it
 RUN useradd -m nonrootuser
 USER nonrootuser
-
-# Copy the rest of the application code into the container
-COPY --chown=nonrootuser:nonrootuser . .
 
 # Expose the application port (e.g., 8080)
 EXPOSE 8080
