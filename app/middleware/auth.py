@@ -3,7 +3,7 @@ from flask_jwt_extended import verify_jwt_in_request, get_jwt_identity, create_a
 from datetime import timedelta
 
 def jwt_required_middleware():
-    allowed_paths = ['/user/login', '/admin/login', '/user/logout', '/admin/logout']
+    allowed_paths = ['/user/login', '/admin/admin_login', '/user/logout', '/admin/logout']
     if request.path in allowed_paths:
         return None  # Proceed without JWT verification
 
