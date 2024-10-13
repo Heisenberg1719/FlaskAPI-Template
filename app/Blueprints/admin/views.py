@@ -3,9 +3,10 @@ from . import admin_blueprint  # Import the admin blueprint from the same folder
 from flask_jwt_extended import jwt_required, create_access_token, create_refresh_token, set_access_cookies, set_refresh_cookies, get_jwt_identity, get_jwt
 from datetime import timedelta
 
+
 # Admin profile route that checks the role and requires JWT authentication
 @admin_blueprint.route('/admin/profile', methods=['GET'])
-@jwt_required(role='admin')
+@jwt_required()
 def admin_dashboard():
     return jsonify({"msg": "Welcome to the admin dashboard!"}), 200
 

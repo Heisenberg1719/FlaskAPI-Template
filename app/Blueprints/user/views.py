@@ -4,12 +4,12 @@ from flask_jwt_extended import jwt_required, create_access_token, create_refresh
 from datetime import timedelta,datetime
 
 
-@user_blueprint.route('/user/profile', methods=['GET'])
-@jwt_required(role='user')
-def user_profile():
-    # Example of returning response and status code
-    return jsonify({"msg": "Welcome to your profile!"}), 200
 
+@user_blueprint.route('/profile', methods=['GET'])
+@jwt_required()
+def user_profile():
+    claims = get_jwt()
+    return jsonify(message=f"Welcome {session['username']} to the User Profile, your role is {claims['role']}"), 200
 
 
 @user_blueprint.route('/login', methods=['GET', 'POST'])

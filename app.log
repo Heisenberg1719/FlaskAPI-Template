@@ -1,0 +1,114 @@
+2024-10-13 15:39:27,800 ERROR: Error occurred: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+Traceback (most recent call last):
+  File "/home/codespace/.local/lib/python3.12/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.local/lib/python3.12/site-packages/flask/app.py", line 883, in full_dispatch_request
+    return self.finalize_request(rv)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.local/lib/python3.12/site-packages/flask/app.py", line 902, in finalize_request
+    response = self.make_response(rv)
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.local/lib/python3.12/site-packages/flask/app.py", line 1203, in make_response
+    raise TypeError(
+  File "/home/codespace/.local/lib/python3.12/site-packages/flask/app.py", line 1198, in make_response
+    rv = self.response_class.force_type(
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.local/lib/python3.12/site-packages/werkzeug/wrappers/response.py", line 237, in force_type
+    response = Response(*run_wsgi_app(response, environ))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.local/lib/python3.12/site-packages/werkzeug/test.py", line 1264, in run_wsgi_app
+    app_rv = app(environ, start_response)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: jwt_required_role.<locals>.decorator() takes 1 positional argument but 2 were given
+The view function did not return a valid response. The return type must be a string, dict, list, tuple with headers or status, Response instance, or WSGI callable, but it was a function.
+2024-10-13 15:45:11,622 WARNING: Logging setup complete: Only warnings, errors, and critical issues will be logged.
+2024-10-13 15:50:59,668 ERROR: Error occurred during JWT verification: Missing cookie "access_token_cookie"
+Traceback (most recent call last):
+  File "/workspaces/FlaskAPI-Template/app/middleware/auth.py", line 22, in jwt_required_middleware
+    verify_jwt_in_request()
+  File "/home/codespace/.local/lib/python3.12/site-packages/flask_jwt_extended/view_decorators.py", line 94, in verify_jwt_in_request
+    jwt_data, jwt_header, jwt_location = _decode_jwt_from_request(
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.local/lib/python3.12/site-packages/flask_jwt_extended/view_decorators.py", line 358, in _decode_jwt_from_request
+    raise NoAuthorizationError(errors[0])
+flask_jwt_extended.exceptions.NoAuthorizationError: Missing cookie "access_token_cookie"
+2024-10-13 15:52:03,343 ERROR: Error occurred during JWT verification: Missing cookie "access_token_cookie"
+Traceback (most recent call last):
+  File "/workspaces/FlaskAPI-Template/app/middleware/auth.py", line 22, in jwt_required_middleware
+    verify_jwt_in_request()
+  File "/home/codespace/.local/lib/python3.12/site-packages/flask_jwt_extended/view_decorators.py", line 94, in verify_jwt_in_request
+    jwt_data, jwt_header, jwt_location = _decode_jwt_from_request(
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.local/lib/python3.12/site-packages/flask_jwt_extended/view_decorators.py", line 358, in _decode_jwt_from_request
+    raise NoAuthorizationError(errors[0])
+flask_jwt_extended.exceptions.NoAuthorizationError: Missing cookie "access_token_cookie"
+2024-10-13 15:52:16,096 ERROR: Error occurred during JWT verification: Missing cookie "access_token_cookie"
+Traceback (most recent call last):
+  File "/workspaces/FlaskAPI-Template/app/middleware/auth.py", line 22, in jwt_required_middleware
+    verify_jwt_in_request()
+  File "/home/codespace/.local/lib/python3.12/site-packages/flask_jwt_extended/view_decorators.py", line 94, in verify_jwt_in_request
+    jwt_data, jwt_header, jwt_location = _decode_jwt_from_request(
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.local/lib/python3.12/site-packages/flask_jwt_extended/view_decorators.py", line 358, in _decode_jwt_from_request
+    raise NoAuthorizationError(errors[0])
+flask_jwt_extended.exceptions.NoAuthorizationError: Missing cookie "access_token_cookie"
+2024-10-13 15:52:28,698 ERROR: Error occurred during JWT verification: Missing cookie "access_token_cookie"
+Traceback (most recent call last):
+  File "/workspaces/FlaskAPI-Template/app/middleware/auth.py", line 22, in jwt_required_middleware
+    verify_jwt_in_request()
+  File "/home/codespace/.local/lib/python3.12/site-packages/flask_jwt_extended/view_decorators.py", line 94, in verify_jwt_in_request
+    jwt_data, jwt_header, jwt_location = _decode_jwt_from_request(
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.local/lib/python3.12/site-packages/flask_jwt_extended/view_decorators.py", line 358, in _decode_jwt_from_request
+    raise NoAuthorizationError(errors[0])
+flask_jwt_extended.exceptions.NoAuthorizationError: Missing cookie "access_token_cookie"
+2024-10-13 15:52:29,605 ERROR: Error occurred during JWT verification: Missing cookie "access_token_cookie"
+Traceback (most recent call last):
+  File "/workspaces/FlaskAPI-Template/app/middleware/auth.py", line 22, in jwt_required_middleware
+    verify_jwt_in_request()
+  File "/home/codespace/.local/lib/python3.12/site-packages/flask_jwt_extended/view_decorators.py", line 94, in verify_jwt_in_request
+    jwt_data, jwt_header, jwt_location = _decode_jwt_from_request(
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.local/lib/python3.12/site-packages/flask_jwt_extended/view_decorators.py", line 358, in _decode_jwt_from_request
+    raise NoAuthorizationError(errors[0])
+flask_jwt_extended.exceptions.NoAuthorizationError: Missing cookie "access_token_cookie"
+2024-10-13 15:52:33,184 ERROR: Error occurred during JWT verification: Missing cookie "access_token_cookie"
+Traceback (most recent call last):
+  File "/workspaces/FlaskAPI-Template/app/middleware/auth.py", line 22, in jwt_required_middleware
+    verify_jwt_in_request()
+  File "/home/codespace/.local/lib/python3.12/site-packages/flask_jwt_extended/view_decorators.py", line 94, in verify_jwt_in_request
+    jwt_data, jwt_header, jwt_location = _decode_jwt_from_request(
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.local/lib/python3.12/site-packages/flask_jwt_extended/view_decorators.py", line 358, in _decode_jwt_from_request
+    raise NoAuthorizationError(errors[0])
+flask_jwt_extended.exceptions.NoAuthorizationError: Missing cookie "access_token_cookie"
+2024-10-13 15:52:34,662 ERROR: Error occurred during JWT verification: Missing cookie "access_token_cookie"
+Traceback (most recent call last):
+  File "/workspaces/FlaskAPI-Template/app/middleware/auth.py", line 22, in jwt_required_middleware
+    verify_jwt_in_request()
+  File "/home/codespace/.local/lib/python3.12/site-packages/flask_jwt_extended/view_decorators.py", line 94, in verify_jwt_in_request
+    jwt_data, jwt_header, jwt_location = _decode_jwt_from_request(
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.local/lib/python3.12/site-packages/flask_jwt_extended/view_decorators.py", line 358, in _decode_jwt_from_request
+    raise NoAuthorizationError(errors[0])
+flask_jwt_extended.exceptions.NoAuthorizationError: Missing cookie "access_token_cookie"
+2024-10-13 15:53:05,095 ERROR: Error occurred during JWT verification: Missing cookie "access_token_cookie"
+Traceback (most recent call last):
+  File "/workspaces/FlaskAPI-Template/app/middleware/auth.py", line 22, in jwt_required_middleware
+  File "/home/codespace/.local/lib/python3.12/site-packages/flask_jwt_extended/view_decorators.py", line 94, in verify_jwt_in_request
+    jwt_data, jwt_header, jwt_location = _decode_jwt_from_request(
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.local/lib/python3.12/site-packages/flask_jwt_extended/view_decorators.py", line 358, in _decode_jwt_from_request
+    raise NoAuthorizationError(errors[0])
+flask_jwt_extended.exceptions.NoAuthorizationError: Missing cookie "access_token_cookie"
+2024-10-13 15:53:18,805 ERROR: Error occurred during JWT verification: Missing cookie "access_token_cookie"
+Traceback (most recent call last):
+  File "/workspaces/FlaskAPI-Template/app/middleware/auth.py", line 22, in jwt_required_middleware
+  File "/home/codespace/.local/lib/python3.12/site-packages/flask_jwt_extended/view_decorators.py", line 94, in verify_jwt_in_request
+    jwt_data, jwt_header, jwt_location = _decode_jwt_from_request(
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/codespace/.local/lib/python3.12/site-packages/flask_jwt_extended/view_decorators.py", line 358, in _decode_jwt_from_request
+    raise NoAuthorizationError(errors[0])
+flask_jwt_extended.exceptions.NoAuthorizationError: Missing cookie "access_token_cookie"
+2024-10-13 15:55:13,633 WARNING: Logging setup complete: Only warnings, errors, and critical issues will be logged.
