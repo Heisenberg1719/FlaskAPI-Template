@@ -1,11 +1,11 @@
 import logging
-from logging.handlers import RotatingFileHandler
+from flask_cors import CORS
+from flask_session import Session
 from flask import Flask, request, jsonify
 from flask_jwt_extended import JWTManager
-from flask_session import Session
-from flask_cors import CORS
-from app.Blueprints.admin import admin_blueprint
 from app.Blueprints.user import user_blueprint
+from app.Blueprints.admin import admin_blueprint
+from logging.handlers import RotatingFileHandler
 from app.Blueprints.public import public_blueprint
 from app.middleware.auth import jwt_required_middleware
 

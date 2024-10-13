@@ -1,7 +1,8 @@
 import os
-from app import create_app
-from config import DevelopmentConfig, ProductionConfig
 from waitress import serve
+from app import create_app
+from config import ProductionConfig
+
 
 # Create the app instance with the desired configuration
 app = create_app(ProductionConfig)
