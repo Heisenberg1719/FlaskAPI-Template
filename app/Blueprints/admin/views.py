@@ -7,16 +7,7 @@ from datetime import timedelta
 @admin_blueprint.route('/admin_profile', methods=['GET'])
 @jwt_required()
 def admin_profile():
-    # Extracting user role from JWT token
-    claims = get_jwt()
-    if claims['role'] != 'admin':
-        return jsonify({"msg": "Admins only!"}), 403
-    
-    # Check session data (optional)
-    if 'admin_logged_in' not in session:
-        return jsonify({"msg": "Session expired or not logged in."}), 401
-    
-    return jsonify(message=f"Welcome to the Admin Profile, your role is {claims['role']}"), 200
+    return jsonify("Welcome to the Admin Profile"), 200
 
 # Admin login route
 @admin_blueprint.route('/admin_login', methods=['POST'])
