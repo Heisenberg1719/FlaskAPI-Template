@@ -1,57 +1,59 @@
-from flask import request, jsonify, make_response, session
-from flask_jwt_extended import verify_jwt_in_request, get_jwt_identity, create_access_token, set_access_cookies, get_jwt
+from flask import request, jsonify, make_response
+from flask_jwt_extended import (
+    verify_jwt_in_request, get_jwt_identity, 
+    create_access_token, set_access_cookies, get_jwt
+)
+from functools import wraps
 from datetime import timedelta
 
-def jwt_required_middleware():
-    allowed_paths = ['/user/login', '/admin/admin_login', '/user/logout', '/admin/logout']
-    if request.path in allowed_paths:
-        return None  # Proceed without JWT verification
+def jwt_required(role=None):
+    """Decorator to enforce JWT authentication and role-based access control."""
+    def decorator(fn):
+        @wraps(fn)
+        def wrapper(*args, **kwargs):
+            allowed_paths = ['/user/login', '/admin/admin_login', '/user/logout', '/admin/logout']
 
-    # Check if the path is not the base URL ("/")
-    if request.path != '/':
-        try:
-            # Verify JWT token in the request
-            verify_jwt_in_request()
+            # Check if the current path is in the allowed paths where JWT is not required
+            if request.path in allowed_paths:
+                return fn(*args, **kwargs)  # Skip JWT verification for these paths
 
-            # Get the current user's identity and claims (including the role)
-            current_user = get_jwt_identity()
-            claims = get_jwt()
+            try:
+                # Verify JWT token in the request
+                verify_jwt_in_request()
 
-            # **Role-Based Access Control** for admin and user
-            # Check for /admin path and require 'admin' role
-            if '/admin' in request.path:
-                # Extracting user role from JWT token
-                if claims.get('role') != 'admin':
-                    return jsonify({"msg": "Unauthorized!"}), 403  # Forbidden
+                # Get the current user's identity and claims (including the role)
+                current_user = get_jwt_identity()
+                claims = get_jwt()
 
-                # Check session data for admin login status
-                if 'admin_logged_in' not in session:
-                    return jsonify({"msg": "Session expired or not logged in."}), 401  # Unauthorized
+                # Role-Based Access Control
+                if role and claims.get('role') != role:
+                    return jsonify({"msg": f"Unauthorized! {role} role required."}), 403  # Forbidden
 
-            # Check for /user path and require 'user' role
-            if '/user' in request.path:
-                # Extracting user role from JWT token
-                if claims.get('role') != 'user':
-                    return jsonify({"msg": "Unauthorized! User role required."}), 403  # Forbidden
+                # **Optional Refresh Token Logic**
+                # Create a new access token to refresh expiration
+                new_access_token = create_access_token(
+                    identity=current_user,
+                    additional_claims={"role": claims.get("role")},
+                    expires_delta=timedelta(minutes=5)
+                )
 
-                # Check session data for user login status
-                if 'user_logged_in' not in session:
-                    return jsonify({"msg": "Session expired or not logged in."}), 401  # Unauthorized
+                # Call the original route handler and get the response and status code
+                response, status_code = fn(*args, **kwargs)
 
-            # **Refresh Token Logic** (Optional)
-            # Create a new access token to refresh expiration
-            new_access_token = create_access_token(identity=current_user, additional_claims={"role": claims.get("role")}, expires_delta=timedelta(minutes=5))
+                # Create the response and set the new access token in cookies
+                response = make_response(response, status_code)
+                set_access_cookies(response, new_access_token)
 
-            # Create the response and set the new access token in cookies
-            response = make_response()
-            set_access_cookies(response, new_access_token)
+                return response  # Return the updated response
 
-            # Return the response object (to update the cookie) or continue request processing
-            return response  
+            except KeyError as e:
+                return jsonify({"msg": "Missing required data", "error": str(e)}), 400
 
-        except Exception as e:
-            # Handle token verification failure (e.g., missing or expired token)
-            return jsonify({"msg": "Missing or invalid token"}), 401  # Unauthorized
+            except AttributeError as e:
+                return jsonify({"msg": "Invalid attribute or data", "error": str(e)}), 400
 
-    # If the request path is not protected, allow the request to proceed
-    return None
+            except Exception as e:
+                return jsonify({"msg": "Missing or invalid token", "error": str(e)}), 401
+
+        return wrapper
+    return decorator
