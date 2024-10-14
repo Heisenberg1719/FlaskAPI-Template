@@ -47,4 +47,4 @@ ENV THREADS=5
 # ENV DB_NAME=SoTruePay
 
 # Run the application with Waitress using the specified host, port, and thread count
-CMD ["python3", "run.py"]
+CMD ["python3", "runner.py"]
