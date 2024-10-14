@@ -1,4 +1,4 @@
-# Use the latest Python base image (3.11-slim)
+# Use the latest Python base image (3.12-slim)
 FROM python:3.12-slim
 
 # Set the working directory in the container
