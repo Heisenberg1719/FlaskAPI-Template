@@ -33,20 +33,12 @@ class UserRoutes:
             if session.get('user_info') and session['user_info'].get('username') == username:
                 session.clear()
 
-            session['user_info'] = {
-                'username': username,
-                'logged_in': True,
-                'role': 'user',
-                'login_time': datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
-            }
-
+            session['user_info'] = {'username': username,'logged_in': True,'role': 'user','login_time': datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')}
             access_token = create_access_token(identity=username, additional_claims={"role": "user"})
             refresh_token = create_refresh_token(identity=username)
-
             response = jsonify({"msg": "User login successful"})
             response.set_cookie('access_token_cookie', access_token, httponly=True, secure=True)
             response.set_cookie('refresh_token_cookie', refresh_token, httponly=True, secure=True)
-
             return response, 200
 
     @staticmethod
@@ -55,10 +47,8 @@ class UserRoutes:
     def logout():
         session.pop('username', None)
         session.pop('user_logged_in', None)
-
         response = jsonify({"msg": "User logged out successfully"})
         response.set_cookie('access_token_cookie', '', expires=0, httponly=True, secure=True)
         response.set_cookie('refresh_token_cookie', '', expires=0, httponly=True, secure=True)
         response.set_cookie('csrf_access_token', '', expires=0, httponly=False, secure=True)
-
         return response, 200
