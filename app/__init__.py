@@ -31,8 +31,9 @@ def create_app(config_class):
     return app
 
 def setup_logging(app):
-    file_handler = RotatingFileHandler('app.log', maxBytes=10240, backupCount=10)
-    formatter = logging.Formatter('%(asctime)s %(levelname)s: %(message)s')
+    file_handler = RotatingFileHandler('app.log', maxBytes=10 * 1024 * 1024, backupCount=10)
+    formatter = logging.Formatter('%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]')
     file_handler.setFormatter(formatter)
-    app.logger.addHandler(file_handler)
+    file_handler.setLevel(logging.INFO) # Set the logging level to INFO (captures info, warning, error, and critical messages)
+    app.logger.addHandler(file_handler) # Add the handler to the app's logger
 
