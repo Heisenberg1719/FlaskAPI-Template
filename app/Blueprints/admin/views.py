@@ -40,11 +40,9 @@ class AdminRoutes:
 
             access_token = create_access_token(identity='admin', additional_claims={"role": "admin"})
             refresh_token = create_refresh_token(identity='admin')
-
             response = jsonify({"msg": "Admin login successful"})
             set_access_cookies(response, access_token)
             set_refresh_cookies(response, refresh_token)
-
             response.set_cookie('csrf_access_token', get_csrf_token(access_token), httponly=True, secure=True)
             response.set_cookie('csrf_refresh_token', get_csrf_token(refresh_token), httponly=True, secure=True)
 
@@ -56,8 +54,6 @@ class AdminRoutes:
     def admin_logout():
         session.pop('admin_info', None)
         response = jsonify({"msg": "Admin logged out successfully"})
-        response.set_cookie('access_token_cookie', '', expires=0, httponly=True, secure=True)
-        response.set_cookie('refresh_token_cookie', '', expires=0, httponly=True, secure=True)
-        response.set_cookie('csrf_access_token', '', expires=0, httponly=True, secure=True)
-        response.set_cookie('csrf_refresh_token', '', expires=0, httponly=True, secure=True)
+        cookies_to_clear = ['access_token_cookie', 'refresh_token_cookie', 'csrf_access_token', 'csrf_refresh_token']
+        for cookie in cookies_to_clear:response.set_cookie(cookie, '', expires=0, httponly=True, secure=True)
         return response, 200
