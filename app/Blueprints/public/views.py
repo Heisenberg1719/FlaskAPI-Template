@@ -4,7 +4,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_tok
 
 @public_blueprint.route('/', methods=['GET'])
 def public_info():
-    return jsonify(message="Public Information"), 200
+    return jsonify(message="Public Information version 1.0 "), 200
 
 
 @public_blueprint.route('/tokenRefresh', methods=['POST'])
