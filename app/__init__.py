@@ -28,24 +28,11 @@ def create_app(config_class):
     def handle_exception(e):
         app.logger.error(f"Error occurred: {str(e)}", exc_info=True)
         return jsonify({"msg": "An error occurred"}), 500
-
     return app
 
 def setup_logging(app):
-    # Set the log level to WARNING for capturing only important issues
-    app.logger.setLevel(logging.WARNING)  # Only WARNING and higher (ERROR, CRITICAL)
-
-    # Create a file handler to log to a file with rotation
     file_handler = RotatingFileHandler('app.log', maxBytes=10240, backupCount=10)
-    # file_handler.setLevel(logging.WARNING)  # Log only WARNING, ERROR, CRITICAL to file
-
-    # Define a simplified log format (no path or line number)
     formatter = logging.Formatter('%(asctime)s %(levelname)s: %(message)s')
     file_handler.setFormatter(formatter)
-
-    # Add handler to the app logger
     app.logger.addHandler(file_handler)
-
-    # Log a message to confirm that logging is set up
-    # app.logger.warning("Logging setup complete: Only warnings, errors, and critical issues will be logged.")
 
