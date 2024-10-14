@@ -14,8 +14,8 @@ def create_app(config_class):
     app.config.from_object(config_class)
     app.config.from_pyfile('config.py', silent=True)
     jwt = JWTManager(app)# Initialize extensions
-    Session(app)
-    CORS(app, resources={r"/*": {"origins": "*"}})
+    Session(app);CORS(app, resources={r"/*": {"origins": "*"}})
+    
     # Register Blueprints
     app.register_blueprint(admin_blueprint, url_prefix='/admin')
     app.register_blueprint(user_blueprint, url_prefix='/user')
@@ -23,11 +23,10 @@ def create_app(config_class):
     app.before_request(jwt_required_middleware)
     setup_logging(app)
 
-    # Log errors and critical issues only
-    @app.errorhandler(Exception)
+    @app.errorhandler(Exception) # Log errors and critical issues only
     def handle_exception(e):
         app.logger.error(f"Error occurred: {str(e)}", exc_info=True)
-        return jsonify({"msg": "An error occurred"}), 500
+        return jsonify({"msg": "An error occurred contact admin..."}), 500
     return app
 
 def setup_logging(app):
