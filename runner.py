@@ -1,22 +1,28 @@
-import os
+import logging, os
 from waitress import serve
 from app import create_app
 from config import ProductionConfig
 
-
 # Create the app instance with the desired configuration
 app = create_app(ProductionConfig)
 
+# Setup logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 if __name__ == '__main__':
-    # Fetch host, port, debug mode, and threads from environment variables (with defaults)
     host = os.getenv('HOST', '0.0.0.0')
     port = int(os.getenv('PORT', 8080))
     debug_mode = os.getenv('DEBUG', 'False').lower() == 'true'
-    threads = int(os.getenv('THREADS', 2))  # Set number of threads, default to 2
+    threads = int(os.getenv('THREADS', 4)) 
+    logger.info(f"Starting server on {host}:{port} with {'debug' if debug_mode else 'production'} mode")
+    logger.info(f"Using {threads} threads.")
 
-    if debug_mode:
-        # Run the app in debug mode for development purposes
-        app.run(host=host, port=port, debug=True)
-    else:
-        # Use Waitress to serve the application with the specified number of threads
-        serve(app, host=host, port=port, threads=threads)
+    try:
+        if debug_mode:app.run(host=host, port=port, debug=True)
+        else:serve(app, host=host, port=port, threads=threads)
+    except KeyboardInterrupt:
+        logger.info("Server shutdown initiated by user (KeyboardInterrupt).")
+    except Exception as e:
+        logger.error(f"An error occurred while starting the server: {e}", exc_info=True)
+    finally:logger.info("Server has been stopped gracefully.")
