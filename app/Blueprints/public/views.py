@@ -1,11 +1,11 @@
 from flask import jsonify
 from . import public_blueprint 
+from app.utils.services.get_info import get_system_details
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token, set_access_cookies
 
 @public_blueprint.route('/', methods=['GET'])
 def public_info():
-    return jsonify(message="Public Information version 1.0 "), 200
-
+    return jsonify(message="Public Information version 1.0", data = get_system_details()), 200
 
 @public_blueprint.route('/tokenRefresh', methods=['POST'])
 @jwt_required(refresh=True)
