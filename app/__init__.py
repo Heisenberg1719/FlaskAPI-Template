@@ -14,8 +14,8 @@ def create_app(config_class):
     app.config.from_object(config_class)
     app.config.from_pyfile('config.py', silent=True)
     jwt = JWTManager(app)# Initialize extensions
-    Session(app)
-    CORS(app, resources={r"/*": {"origins": "*"}})
+    Session(app);CORS(app, resources={r"/*": {"origins": "*"}})
+    
     # Register Blueprints
     app.register_blueprint(admin_blueprint, url_prefix='/admin')
     app.register_blueprint(user_blueprint, url_prefix='/user')
@@ -23,16 +23,16 @@ def create_app(config_class):
     app.before_request(jwt_required_middleware)
     setup_logging(app)
 
-    # Log errors and critical issues only
-    @app.errorhandler(Exception)
+    @app.errorhandler(Exception) # Log errors and critical issues only
     def handle_exception(e):
         app.logger.error(f"Error occurred: {str(e)}", exc_info=True)
-        return jsonify({"msg": "An error occurred"}), 500
+        return jsonify({"msg": "An error occurred contact admin..."}), 500
     return app
 
 def setup_logging(app):
-    file_handler = RotatingFileHandler('app.log', maxBytes=10240, backupCount=10)
-    formatter = logging.Formatter('%(asctime)s %(levelname)s: %(message)s')
+    file_handler = RotatingFileHandler('app.log', maxBytes=10 * 1024 * 1024, backupCount=10)
+    formatter = logging.Formatter('%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]')
     file_handler.setFormatter(formatter)
-    app.logger.addHandler(file_handler)
+    file_handler.setLevel(logging.INFO) # Set the logging level to INFO (captures info, warning, error, and critical messages)
+    app.logger.addHandler(file_handler) # Add the handler to the app's logger
 

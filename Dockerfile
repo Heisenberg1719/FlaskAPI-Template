@@ -1,5 +1,5 @@
-# Use the latest Python base image (3.11-slim)
-FROM python:3.11-slim
+# Use the latest Python base image (3.12-slim)
+FROM python:3.12-slim
 
 # Set the working directory in the container
 WORKDIR /app
@@ -47,4 +47,4 @@ ENV THREADS=5
 # ENV DB_NAME=SoTruePay
 
 # Run the application with Waitress using the specified host, port, and thread count
-CMD ["python3", "run.py"]
+CMD ["python3", "runner.py"]
